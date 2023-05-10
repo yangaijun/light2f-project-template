@@ -8,19 +8,22 @@ const routes = [
   }, {
     path: '/',
     component: () => import('Layouts/Basic'),
-    routes: modules
+    routes: [
+      ...modules,
+      { component: import('views/NotFound') }
+    ]
   }
-] 
+]
 
 function addLazyComponent(routes = []) {
-    routes.forEach(route => {
-      route.component = React.lazy(route.component);
-      if (route.routes) {
-        addLazyComponent(route.routes);
-      }
-    });
-} 
+  routes.forEach(route => {
+    route.component = React.lazy(route.component);
+    if (route.routes) {
+      addLazyComponent(route.routes);
+    }
+  });
+}
 
-addLazyComponent(routes); 
+addLazyComponent(routes);
 
 export default routes;

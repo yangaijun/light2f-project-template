@@ -1,19 +1,18 @@
-import { Router } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
-import history from 'libs/history';
-import Routes from 'components/Routes'
-import routes from 'routes';
 import zhCN from 'antd/es/locale/zh_CN';
+import { Provider } from 'react-redux';
+import Router from 'routes/Router';
+import store from 'store';
 import './freedomenConfig'
 import './App.less';
 
 function App() {
   return (
-    <ConfigProvider locale={zhCN}>
-      <Router history={history}>
-        <Routes routes={routes} />
-      </Router>
-    </ConfigProvider>
+    <Provider store={store}>
+      <ConfigProvider locale={zhCN}>
+        <Router />
+      </ConfigProvider>
+    </Provider>
   );
 }
 

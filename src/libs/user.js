@@ -2,6 +2,7 @@ class User {
   #tokenKey = 'tokenKey';
   #userIdKey = 'userId';
   #userNameKey = 'userName';
+  #userMenuPathsKey = 'userMenuPaths'
   #store = window.localStorage;
  
   getToken() {
@@ -35,10 +36,30 @@ class User {
     this.#store.removeItem(this.#userIdKey);
   }
 
+  setUserMenuPaths(paths) {
+    if (Array.isArray(paths)) {
+      this.#store.setItem(this.#userMenuPathsKey, JSON.stringify(paths))
+    }
+  }
+  getUserMenuPaths() {
+    let paths = this.#store.getItem(this.#userMenuPathsKey);
+    if (paths) {
+      paths = JSON.parse(paths)
+      if (Array.isArray(paths)) {
+        return paths
+      }
+    }
+    return null
+  }
+  removeUserMenuPaths() {
+    this.#store.removeItem(this.#userMenuPathsKey);
+  }
+
   clearUser() {
     this.removeToken();
     this.removeUserName();
     this.removeUserId();
+    this.removeUserMenuPaths();
   }
 }
 
