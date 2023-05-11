@@ -10,11 +10,15 @@ const defaultLoadPaths = ["/login", "/"]
 const getLoadRoutes = (routes = [], paths) => {
     const loadRoutes = []
     for (let route of routes) {
-        if (!route.path || paths.includes(route.path)) {
-            const newRoute = { ...route }
-            if (newRoute.routes) {
-                newRoute.routes = getLoadRoutes(newRoute.routes, paths)
+        const newRoute = { ...route }
+        if (route.routes?.length) {
+            let newRoutes = getLoadRoutes(route.routes, paths)
+
+            if (newRoutes.length) {
+                newRoute.routes = newRoutes
+                loadRoutes.push(newRoute)
             }
+        } else if (!route.path || paths.includes(route.path)) { 
             loadRoutes.push(newRoute)
         }
     }

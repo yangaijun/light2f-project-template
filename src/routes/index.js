@@ -10,7 +10,7 @@ const routes = [
     component: () => import('Layouts/Basic'),
     routes: [
       ...modules,
-      { component: import('views/NotFound') }
+      { component: () => import('views/NotFound') }
     ]
   }
 ]

@@ -1,7 +1,9 @@
 import user from './user';
 import qs from 'qs';
 import ihistory from './history';
+import { setUserMenuPaths as setMenuPaths, clearUserMenuPaths } from 'slices/userSlice'
 import d from 'dayjs';
+import store from 'store';
 
 function getNextPath(path, state) {
     let newPath = path
@@ -38,7 +40,7 @@ export function setToken(token) {
 }
 
 export function setUserId(id) {
-	user.setUserId(id)
+    user.setUserId(id)
 }
 
 export function getUserId() {
@@ -46,8 +48,10 @@ export function getUserId() {
 }
 
 export function logout() {
-	user.clearUser()
-	history.replace('/login')
+    user.clearUser()
+    store.dispatch(clearUserMenuPaths())
+    
+    history.replace('/login')
 }
 
 export function download(resp, fileName) {
@@ -59,14 +63,19 @@ export function download(resp, fileName) {
     link.click();
 }
 
+export function setUserMenuPaths(menuPaths) {
+    store.dispatch(setMenuPaths(menuPaths))
+}
+
 export default {
     history,
-	dayjs,
+    dayjs,
     parseURLParams,
     setToken,
     getToken,
-	setUserId,
+    setUserId,
     getUserId,
-	logout,
-    download
+    logout,
+    download,
+    setUserMenuPaths
 }

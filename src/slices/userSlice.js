@@ -10,12 +10,17 @@ export const userSlice = createSlice({
         setUserMenuPaths(state, { payload }) {
             user.setUserMenuPaths(payload)
             state.userMenuPaths = payload
+        },
+        clearUserMenuPaths(state) {
+            user.removeUserMenuPaths()
+            state.userMenuPaths = null
         }
     }
 })
   
 export const {
-    setUserMenuPaths
+    setUserMenuPaths,
+    clearUserMenuPaths
 } = userSlice.actions;
 
 export default userSlice.reducer;
