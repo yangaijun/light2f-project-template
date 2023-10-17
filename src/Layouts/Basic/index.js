@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Layout, Menu, Breadcrumb, Button, Modal } from 'antd'
+import { Layout, Menu, Breadcrumb, Button, Spin, Modal } from 'antd'
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     LogoutOutlined
 } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import { projectName } from 'systemConfig'
 import { history, logout } from 'libs/util'
 import './index.less'
@@ -54,6 +55,7 @@ export default function Basic(props) {
     const [collapsed, setCollapsed] = useState(false)
     const [activity, setActivity] = useState(pathname)
     const [breadcrumbList, setBreadcrumbList] = useState([])
+    const { pageLoading } = useSelector(state => state.user)
 
     const defaultOpenKeys = useMemo(() => {
         return getDefaultOpenKeys(pathname)
@@ -64,7 +66,7 @@ export default function Basic(props) {
         setBreadcrumbList(getBreadcrumbList(routes, pathname))
     }, [routes, pathname])
 
-    useEffect(() => { 
+    useEffect(() => {
         if (pathname === '/') {
             history.replace('/login')
         }
@@ -86,9 +88,9 @@ export default function Basic(props) {
                     }
                 }
                 return newRoute
-            }) 
+            })
     }
-    
+
     const menuItems = useMemo(() => renderSubMenu(routes), [routes])
 
     return (
@@ -124,13 +126,15 @@ export default function Basic(props) {
                     </div>
                 </Header>
                 <Content className="basic-center-content">
-                    <Breadcrumb className="basic-center-content-bread" items={breadcrumbList} />
-                    <div className="basic-center-content-page">
-                        {props.children}
-                    </div>
-                    <Footer style={{ textAlign: 'center' }}>
-                        <a href="https://light2f.com" target="_blank">Freedomen ©2023 Created by Light</a>
-                    </Footer>
+                    <Spin spinning={pageLoading}>
+                        <Breadcrumb className="basic-center-content-bread" items={breadcrumbList} />
+                        <div className="basic-center-content-page">
+                            {props.children}
+                        </div>
+                        <Footer style={{ textAlign: 'center' }}>
+                            <a href="https://light2f.com" target="_blank">Freedomen ©2023 Created by Light</a>
+                        </Footer>
+                    </Spin>
                 </Content>
             </Layout>
         </Layout>

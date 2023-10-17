@@ -1,7 +1,7 @@
 import user from './user';
 import qs from 'qs';
 import ihistory from './history';
-import { setUserMenuPaths as setMenuPaths, clearUserMenuPaths } from 'slices/userSlice'
+import { setUserMenuPaths as setSliceUserMenuPaths, setPageLoading as setSlicePageLoading, clearUserMenuPaths } from 'slices/userSlice'
 import d from 'dayjs';
 import store from 'store';
 
@@ -64,7 +64,11 @@ export function download(resp, fileName) {
 }
 
 export function setUserMenuPaths(menuPaths) {
-    store.dispatch(setMenuPaths(menuPaths))
+    store.dispatch(setSliceUserMenuPaths(menuPaths))
+}
+
+export function setPageLoading(loading = true) {
+    store.dispatch(setSlicePageLoading(loading))
 }
 
 export default {
@@ -77,5 +81,6 @@ export default {
     getUserId,
     logout,
     download,
-    setUserMenuPaths
+    setUserMenuPaths,
+    setPageLoading
 }

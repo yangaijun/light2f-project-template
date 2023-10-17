@@ -37,10 +37,12 @@ axiosInstance.interceptors.request.use(config => {
   return config
 })
 
-const paramsSerializer = params => {
-  //不同框架可能需要不一样的配置, { allowDots: true }
-  return qs.stringify(params);
-}
+const paramsSerializer ={
+    serialize: params => {
+      //不同框架可能需要不一样的配置, { allowDots: true }
+      return qs.stringify(params);
+    }
+} 
 
 class HTTP {
   post(url, params, config) {
